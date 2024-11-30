@@ -1,38 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{title}}</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body style="background-color: #0A1128; color: white; font-family: Arial, sans-serif;">
+  <style>
+    body {
+      background: linear-gradient(135deg, #0A1128, #1A355C);
+      color: white;
+      font-family: 'Arial', sans-serif;
+      overflow-x: hidden;
+    }
 
+    h1 {
+      font-size: 4rem;
+      font-weight: 900;
+      text-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+      animation: fadeInDown 1s ease;
+    }
+
+    p {
+      font-size: 1.3rem;
+      line-height: 1.8;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      color: #e0f7fa;
+      animation: fadeIn 1.5s ease;
+    }
+
+    .btn-primary {
+      background-color: #0077b6;
+      border-color: #0077b6;
+      font-size: 1.1rem;
+      padding: 0.9rem 2.5rem;
+      border-radius: 50px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-outline-light {
+      color: white;
+      border: 2px solid white;
+      font-size: 1.1rem;
+      padding: 0.9rem 2.5rem;
+      border-radius: 50px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-primary:hover,
+    .btn-outline-light:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
+    }
+
+    footer p {
+      font-size: 0.9rem;
+      color: #a2d2ff;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
   <div class="container vh-100 d-flex flex-column justify-content-center align-items-center text-center">
     <!-- Title Section -->
-    <h1 class="fw-bold" style="font-size: 3.5rem; margin-bottom: 0.5rem;">TimeSync</h1>
-    <p style="font-size: 1.2rem; margin-bottom: 1.5rem; line-height: 1.8; max-width: 600px;">
-      {{description}}
-    </p>
+    <h1 class="fw-bold">TimeSync</h1>
+    <p>{{description}}</p>
 
     <!-- Buttons Section -->
     <div>
-      <a href="/register" class="btn btn-primary btn-lg mx-2" style="background-color: #0077b6; border-color: #0077b6; font-size: 1rem; padding: 0.8rem 2rem;">
-        Register
-      </a>
-      <a href="/login" class="btn btn-outline-light btn-lg mx-2" style="color: white; border: 2px solid white; font-size: 1rem; padding: 0.8rem 2rem;">
-        Login
-      </a>
+      <a href="/register" class="btn btn-primary mx-2">Register</a>
+      <a href="/login" class="btn btn-outline-light mx-2">Login</a>
     </div>
 
     <!-- Footer Section -->
-    <footer style="margin-top: 2rem; font-size: 0.9rem; color: #cbd5e0;">
+    <footer style="margin-top: 2rem;">
       <p>&copy; 2024 TimeSync. All rights reserved.</p>
     </footer>
   </div>
 
-  <!-- Bootstrap JS (Optional for future interactivity) -->
+  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

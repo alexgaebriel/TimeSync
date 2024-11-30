@@ -3,28 +3,238 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edit Shift - TimeSync</title>
+  <title>Admin Dashboard - TimeSync</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      background-color: #0A1128;
+      font-family: 'Roboto', Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar {
+      height: 100vh;
+      background: linear-gradient(180deg, #0A1128, #1C3D6E);
+      color: white;
+      overflow: hidden;
+      padding-top: 20px;
+    }
+
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      text-align: left;
+      padding: 15px 15px;
+      gap: 15px;
+      line-height: 2.5;
+    }
+
+    .sidebar a:hover {
+      background-color: #ADD8E6;
+      color: #0A1128;
+      border-radius: 4px;
+    }
+
+    .navbar {
+      background-color: #0A1128;
+      color: white;
+    }
+
+    .navbar-brand {
+      color: #ADD8E6;
+      font-weight: bold;
+      font-size: 1.8rem;
+    }
+
+    .navbar-brand:hover {
+      color: #ADD8E6;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      color: black;
+      flex-grow: 1;
+      overflow: auto;
+      height: calc(98vh - 70px);
+      padding: 20px;
+    }
+
+    main {
+      background: linear-gradient(180deg, #0A1128, #1C3D6E);
+      min-height: 100vh;
+    }
+
+    .logout-btn {
+      background-color: #dc3545;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 15px;
+      width: 100%;
+      margin-top: auto;
+    }
+
+    .logout-btn:hover {
+      background-color: #f44336;
+      color: white;
+    }
+
+    .table th, .table td {
+      text-align: center;
+    }
+
+    .d-flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  </style>
 </head>
 <body>
-  <div class="container my-5">
-    <h1 class="mb-4">Edit Shift</h1>
-    <form method="POST" action="/edit-shift/{{shift.ID}}">
-      <div class="mb-3">
-        <label for="shiftId" class="form-label">Shift ID</label>
-        <input type="text" class="form-control" id="shiftId" name="shiftId" value="{{shift.ID}}" disabled>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-12 col-md-3 col-lg-2 sidebar p-3 d-flex flex-column align-items-start">
+        <div class="mb-4 text-center w-100">
+          <img src="/path/to/logo.png" alt="Company Logo" class="img-fluid" style="max-width: 100px;">
+        </div>
+        <ul class="nav flex-column w-100">
+          <li class="nav-item">
+            <a href="/profile" class="nav-link py-2">
+              <i class="fas fa-user-circle"></i> Profile
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/employee" class="nav-link py-2">
+              <i class="fas fa-users"></i> Employee
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin" class="nav-link py-2">
+              <i class="fas fa-user-shield"></i> Admin
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/department" class="nav-link py-2">
+              <i class="fas fa-building"></i> Department
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/shift" class="nav-link py-2">
+              <i class="fas fa-calendar-alt"></i> Shift
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/attendance" class="nav-link py-2">
+              <i class="fas fa-clock"></i> Attendance
+            </a>
+          </li>
+        </ul>
+        <button class="logout-btn mt-auto" onclick="showLogoutModal()">Logout</button>
       </div>
-      <div class="mb-3">
-        <label for="timeIn" class="form-label">Time In</label>
-        <input type="time" class="form-control" id="timeIn" name="timeIn" value="{{shift.TimeIn}}" required>
-      </div>
-      <div class="mb-3">
-        <label for="timeOut" class="form-label">Time Out</label>
-        <input type="time" class="form-control" id="timeOut" name="timeOut" value="{{shift.TimeOut}}" required>
-      </div>
-      <button type="submit" class="btn btn-primary">Save Changes</button>
-    </form>
-    <a href="/shift" class="btn btn-link mt-3">Back to Shift List</a>
+
+      <!-- Main Content -->
+      <main class="col-12 col-md-9 col-lg-10">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark px-3">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="/dashboard">TimeSync</a>
+          </div>
+        </nav>
+
+        <!-- Admin Dashboard -->
+        <div class="card p-4 my-4">
+          <h3 class="text-center mb-4">Admin Dashboard</h3>
+
+          <!-- Search Bar and Add New Admin Button -->
+          <div class="d-flex justify-content-between mb-3">
+            <!-- Search Bar (assuming it's already in use) -->
+            <div class="d-flex align-items-center">
+              <label for="searchInput" class="me-2">Search:</label>
+              <input type="text" id="searchInput" class="form-control" placeholder="Search Admins">
+            </div>
+
+            <!-- Add New Admin Button -->
+            <a href="/admin/add" class="btn btn-success">Add New Admin</a>
+          </div>
+
+          <!-- Admin Table -->
+          <table id="adminTable" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Department</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#employees}}
+              <tr>
+                <td>{{ID}}</td>
+                <td>{{Name}}</td>
+                <td>{{Email}}</td>
+                <td>{{DepartmentName}}</td>
+              </tr>
+              {{/employees}}
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
   </div>
+
+  <!-- Logout Modal -->
+  <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="logoutModalLabel">Are you sure you want to log out?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          You will be logged out from the system.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" onclick="logout()">Logout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Initialize DataTables
+      $('#adminTable').DataTable();
+    });
+
+    function showLogoutModal() {
+      var logoutModal = new bootstrap.Modal(document.getElementById('logoutModal'));
+      logoutModal.show();
+    }
+
+    function logout() {
+      window.location.href = '/';
+    }
+  </script>
 </body>
 </html>

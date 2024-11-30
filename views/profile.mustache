@@ -3,30 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profile - TimeSync</title>
+  <title>Profile</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
+    html, body {
+      height: 100%; /* Ensure full height */
+      margin: 0; /* Remove default margin */
+    }
+
     body {
-      background-color: #f8f9fa;
-      font-family: 'Arial', sans-serif;
+      background-color: #0A1128; /* Match the sidebar color */
+      font-family: 'Roboto', Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
     }
 
     .sidebar {
       height: 100vh;
-      background-color: #0A1128;
+      background: linear-gradient(180deg, #0A1128, #1C3D6E);
       color: white;
+      overflow: hidden; /* Prevent overflow in sidebar */
+      padding-top: 20px;
     }
 
     .sidebar a {
       color: white;
       text-decoration: none;
       font-weight: bold;
+      display: flex;
+      align-items: center;
+      text-align: left; /* Align the text to the left */
+      padding: 15px 15px;
+      gap: 15px; /* Adds spacing between the icon and text */
+      line-height: 2.5;
     }
 
     .sidebar a:hover {
-      background-color: #1C3D6E;
+      background-color: #ADD8E6; /* Light blue hover */
+      color: #0A1128;
       border-radius: 4px;
-      padding: 8px;
     }
 
     .navbar {
@@ -35,28 +51,24 @@
     }
 
     .navbar-brand {
-      color: #FFD700;
+      color: #ADD8E6; /* Light blue */
       font-weight: bold;
-      font-size: 1.5rem;
+      font-size: 1.8rem;
     }
 
-    .dropdown-menu {
-      background-color: #0A1128;
-      border: none;
-    }
-
-    .dropdown-item {
-      color: white;
-    }
-
-    .dropdown-item:hover {
-      background-color: #1C3D6E;
+    .navbar-brand:hover {
+      color: #ADD8E6; /* Light blue hover effect */
     }
 
     .card {
       background-color: white;
       border-radius: 8px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      color: black;
+      flex-grow: 1; /* Allow card to grow to fill space */
+      overflow: auto; /* Prevent card overflow but allow scroll if necessary */
+      height: calc(98vh - 70px);
+      padding: 20px;
     }
 
     .form-control[disabled] {
@@ -74,7 +86,7 @@
     }
 
     .edit-btn:hover {
-      background-color: #FFD700;
+      background-color: #ADD8E6; /* Light blue hover effect */
       color: #0A1128;
     }
 
@@ -85,12 +97,56 @@
       border: none;
       border-radius: 8px;
       padding: 10px 15px;
-      width: 100%;
+      width: auto;
+      margin: 20px auto 0;
+      display: block;
     }
 
     .save-btn:hover {
-      background-color: #FFD700;
+      background-color: #ADD8E6; /* Light blue hover effect */
       color: #0A1128;
+    }
+
+    .logout-btn {
+      background-color: #dc3545;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 15px;
+      width: 100%;
+      margin-top: auto; /* Move logout button to the bottom */
+    }
+
+    .logout-btn:hover {
+      background-color: #f44336;
+      color: white;
+    }
+
+    .user-name {
+      font-weight: bold;
+      font-size: 1rem;
+      color: white;
+    }
+
+    main {
+      background: linear-gradient(180deg, #0A1128, #1C3D6E); /* Matching the sidebar gradient */
+      min-height: 100vh;
+    }
+
+    /* Style for the Profile title */
+    .profile-title {
+      font-size: 2.5rem; /* Larger font size */
+      font-weight: bold;
+      color: #ADD8E6; /* Light blue color for text */
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #0A1128, #ADD8E6); /* Gradient from dark blue to light blue */
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: 2px; /* Add spacing between letters */
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Soft shadow effect */
+      padding: 10px 20px; /* Some padding around the text */
+      border-radius: 5px; /* Optional rounded corners */
     }
   </style>
 </head>
@@ -104,45 +160,61 @@
         </div>
         <ul class="nav flex-column w-100">
           <li class="nav-item">
-            <a href="/profile" class="nav-link py-2">Profile</a>
+            <a href="/profile" class="nav-link py-2">
+              <i class="fas fa-user-circle"></i> Profile
+            </a>
           </li>
           <li class="nav-item">
-            <a href="/employee" class="nav-link py-2">Employee</a>
+            <a href="/employee" class="nav-link py-2">
+              <i class="fas fa-users"></i> Employee
+            </a>
           </li>
           <li class="nav-item">
-            <a href="/admin" class="nav-link py-2">Admin</a>
+            <a href="/admin" class="nav-link py-2">
+              <i class="fas fa-user-shield"></i> Admin
+            </a>
           </li>
           <li class="nav-item">
-            <a href="/department" class="nav-link py-2">Department</a>
+            <a href="/department" class="nav-link py-2">
+              <i class="fas fa-building"></i> Department
+            </a>
           </li>
           <li class="nav-item">
-            <a href="/shift" class="nav-link py-2">Shift</a>
+            <a href="/shift" class="nav-link py-2">
+              <i class="fas fa-calendar-alt"></i> Shift
+            </a>
           </li>
           <li class="nav-item">
-            <a href="/attendance" class="nav-link py-2">Attendance</a>
+            <a href="/attendance" class="nav-link py-2">
+              <i class="fas fa-clock"></i> Attendance
+            </a>
           </li>
         </ul>
+        <button class="logout-btn mt-auto" onclick="showLogoutModal()">Logout</button>
       </div>
 
       <!-- Main Content -->
       <main class="col-12 col-md-9 col-lg-10">
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark px-3">
-          <a class="navbar-brand" href="/dashboard">TimeSync</a>
-          <div class="ms-auto dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
-              {{username}}
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
-              <li><a class="dropdown-item" href="/profile">Profile</a></li>
-              <li><a class="dropdown-item" href="/logout">Logout</a></li>
-            </ul>
+          <div class="container-fluid">
+            <!-- Removed TimeSync text -->
+            <a class="navbar-brand d-flex align-items-center" href="/dashboard">
+              <!-- TimeSync was here, now removed -->
+            </a>
+
+            <!-- User Name -->
+            <div class="ms-auto user-name">
+              Admin Alex
+            </div>
           </div>
         </nav>
 
         <!-- Profile Info -->
         <div class="card p-4 my-4">
-          <h3 class="text-center mb-4">Profile</h3>
+          <!-- Profile Title with Style -->
+          <h3 class="text-center mb-4 profile-title">Profile</h3>
+
           <form id="profileForm">
             <!-- Employee ID -->
             <div class="d-flex align-items-center mb-3">
@@ -154,21 +226,24 @@
             <div class="d-flex align-items-center mb-3">
               <label class="form-label w-25">Name</label>
               <input type="text" id="name" class="form-control w-50" value="{{profile.Name}}" disabled>
-              <button type="button" class="edit-btn ms-2" onclick="enableField('name')">Edit</button>
+              <!-- Edit Icon Button -->
+              <button type="button" class="edit-btn ms-2" onclick="enableField('name')"><i class="fas fa-pencil-alt"></i></button>
             </div>
 
             <!-- Email -->
             <div class="d-flex align-items-center mb-3">
               <label class="form-label w-25">Email</label>
               <input type="email" id="email" class="form-control w-50" value="{{profile.Email}}" disabled>
-              <button type="button" class="edit-btn ms-2" onclick="enableField('email')">Edit</button>
+              <!-- Edit Icon Button -->
+              <button type="button" class="edit-btn ms-2" onclick="enableField('email')"><i class="fas fa-pencil-alt"></i></button>
             </div>
 
             <!-- Username -->
             <div class="d-flex align-items-center mb-3">
               <label class="form-label w-25">Username</label>
               <input type="text" id="username" class="form-control w-50" value="{{profile.Username}}" disabled>
-              <button type="button" class="edit-btn ms-2" onclick="enableField('username')">Edit</button>
+              <!-- Edit Icon Button -->
+              <button type="button" class="edit-btn ms-2" onclick="enableField('username')"><i class="fas fa-pencil-alt"></i></button>
             </div>
 
             <!-- Birthdate -->
@@ -189,30 +264,52 @@
               <input type="text" class="form-control w-50" value="{{profile.HireDate}}" disabled>
             </div>
 
-            <!-- Save Changes Button -->
-            <button type="submit" class="save-btn mt-4">Save Changes</button>
+            <!-- Save Button -->
+            <button type="submit" class="save-btn">Save Changes</button>
           </form>
         </div>
       </main>
     </div>
   </div>
 
-  <!-- JavaScript to handle editing -->
+  <!-- Optional Logout Modal -->
+  <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="logoutModalLabel">Are you sure you want to log out?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          You will be logged out from the system.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" onclick="logout()">Logout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     function enableField(fieldId) {
-      const field = document.getElementById(fieldId);
-      field.disabled = false;
-      field.focus();
+      document.getElementById(fieldId).disabled = false;
     }
 
-    document.getElementById('profileForm').addEventListener('submit', function (event) {
-      event.preventDefault();
-      alert('Changes saved successfully!');
-      // Add logic to save changes to the server
-    });
+    function showLogoutModal() {
+      var logoutModal = new bootstrap.Modal(document.getElementById('logoutModal'));
+      logoutModal.show();
+    }
+
+    function logout() {
+      // Implement logout logic
+      console.log('User logged out');
+      
+      // Redirect to the landing page
+      window.location.href = '/'; // Adjust the URL as needed for your landing page
+    }
   </script>
 
-  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
